@@ -1,7 +1,8 @@
-#define COUT(str) (cout << "-------------\n" \
+#define COUT(str) (cout << "---------------------------------------\n" \
                         << str \
-                        << "\n-------------" \
+                        << "\n---------------------------------------" \
                         << endl)
+#define BOOST_BIND_GLOBAL_PLACEHOLDERS
 
 // c++ stdlib
 #include <iostream>
@@ -76,6 +77,7 @@ void dynamicBitsetTest()
 void unorderedTest()
 {
     using namespace boost;
+
     // 散列集合用法示例
     unordered_set<int> s = {1, 2, 3, 4, 5};
 
@@ -100,6 +102,21 @@ void unorderedTest()
     unordered_set<int> us1 = list_of(1)(2)(3);
     unordered_set<int> us2 = list_of(3)(2)(1);
     BOOST_ASSERT(us1 == us2);
+
+    // 散列映射用法，使用assign初始化
+    unordered_map<int, string> um = map_list_of(1, "one")(2, "two")(3, "three");
+    
+    um.insert(std::make_pair(10, "ten"));
+    cout << um[10] << endl; // 使用[]访问元素
+    um[11] = "eleven";  // 使用关联数组，注意这里的[x]和普通数组[x]的区别
+    um[15] = "fifteen";
+
+    auto p = um.begin();
+    for (;p != um.end(); ++p)
+    { cout << p->first << "-" << p->second << ","; }
+
+    um.erase(11);
+    cout << um.size() << endl;
 }
 
 // --------------------muti_array--------------------
@@ -140,7 +157,7 @@ int main()
     COUT("dynamic bitset");
     dynamicBitsetTest();
 
-    COUT("unorder set");
+    COUT("unordered");
     unorderedTest();
 
     COUT("muti_array");

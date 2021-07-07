@@ -1,14 +1,16 @@
-#### 获取方式
+# 安装Boost库
+
+## 获取方式
 
 官网下载合适版本：https://www.boost.org/
 
 此处用的是`boost_1_75_0`版本
 
-#### 开发环境
+## 开发环境
 
 推荐使用`GCC 7.x.x`或以上编译器
 
-#### 安装Boost库
+## 安装Boost库
 
 此处采用简易安装，默认安装在`/usr/local/include`和`/usr/local/lib`下
 
@@ -21,7 +23,7 @@ tar -zxvf boost_1_75_0.tar.gz
 ./b2 install
 ```
 
-#### 安装验证
+## 安装验证
 
 编写一个boost程序，验证安装是否成功
 

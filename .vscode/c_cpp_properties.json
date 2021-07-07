@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/mylib/boost/boost_1_72_0",
+                "E:/github/rocksdb/include",
+                "E:/github/oneTBB/include",
+                "E:/github/oneTBB/include/oneApi",
+                "E:/github/jsoncpp/include",
+                "E:/github/benchmark/include",
+                "E:/github/libzdb/src",
+                "E:/github/DMDB/DMDB/install/include",
+                "E:\\sitech\\VSCode工作区\\workspace_WSL_projects\\dataaduit",
+                "C:\\Users\\Liang\\AppData\\Local\\Programs\\Python\\Python37\\include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.18362.0",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}

@@ -1,17 +1,17 @@
-## lexical_cast
+# lexical_cast
 
-### 功能
+## 功能
 
 对字符串进行“字面值”的转换，对字符串与整数/浮点数之间进行转换
 
-### 需要包含的头文件
+## 需要包含的头文件
 
 ```c++
 #inlude <boost/lexical_cast.hpp>
 using namespace boost;
 ```
 
-### 声明
+## 声明
 
 ```c++
 //标准形式，转换数字和字符串
@@ -23,7 +23,7 @@ template <typename Target>
 inline Target lexical_cast(const char * chars,std::size_t count)
 ```
 
-### 使用
+## 使用
 
 在模板参数里指定转换的目标类型即可
 
@@ -47,11 +47,11 @@ string str = lexical_cast<string> (0x10);
 **【注意事项】**
 该模板智能转换字面值，如果出现不合理的转换，例如“hello”转int类型，则会报错（正常人应该不会这么干）
 
-### 错误处理
+## 错误处理
 
 当lexical_cast无法执行转换操作时会抛出异常bad_lexical_cast，它是std::bad_cast的派生类
 
-#### 传统保护办法
+## 传统保护办法
 
 在使用lexical_cast时应该使用try_catch来保护代码
 
@@ -70,7 +70,7 @@ error:
 bad lexical cast:source type value could not be interpreted as target
 ```
 
-#### 已有库的保护办法
+## 已有库的保护办法
 
 需要使用命名空间：boost::conversion
 
@@ -98,7 +98,7 @@ assert(!num_valid<int>("3.14"));
 assert(num_valid<int>("65535"));
 ```
 
-### 转换要求
+## 转换要求
 
 lexical_cast对转换对象有一定要求
 
@@ -112,7 +112,7 @@ lexical_cast对转换对象有一定要求
 
 > 最常用的搭档：int,double,string等POD类型
 
-### C++标准转换函数
+## C++标准转换函数
 
 ```c++
 //字符串转换为数字

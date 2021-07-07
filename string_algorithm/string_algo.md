@@ -1,10 +1,10 @@
-## string_algo
+# string_algo
 
-### 功能
+## 功能
 
 提供了强大的字符串处理能力，如查找、访问、基本的字符串处理
 
-### 头文件和命名空间
+## 头文件和命名空间
 
 ```c++
 #include <boost/algorithm/string.hpp>
@@ -12,11 +12,11 @@
 using namespace boost;
 ```
 
-### 用法
+## 用法
 
 【注意事项】不仅可以用在`string`上（在这里`string`被看作是`vector<char>`），也可以用于部分其他容器,例如（`vector<T>`）
 
-#### 大小写转换
+## 大小写转换
 
 ```c++
 string str("Hello");
@@ -30,7 +30,7 @@ cout << to_lower(str) <<endl;
 cout << to_lower_copy(str) << endl;
 ```
 
-#### 判断式（算法）
+## 判断式（算法）
 
 - `lexicographical_compare`：根据字典顺序检测一个字符串是否小于另一个字符串
 - `starts_with`：检测字符串是否以另一个字符串为前缀
@@ -64,7 +64,7 @@ assert(ilexicographical_compare(str,str3));    //大小写无关字符串比较
 assert(all(str2.substr(0,5),is_lower()));    //检测字符串均小写
 ```
 
-#### 分类
+## 分类
 
 提供一组分类函数，用于检测字符串是否符合某种特性，主要搭配其他算法使用，如上一节的all
 
@@ -84,7 +84,7 @@ assert(all(str2.substr(0,5),is_lower()));    //检测字符串均小写
 
 需要注意的是这些函数并不真正地检测字符，而是返回一个类型为detail：：is_classifiedF的函数对象，这个函数对象的operator（）才是真正的分类函数（因此，这些函数都属于工厂函数）。
 
-#### 修剪
+## 修剪
 
 提供三个算法，删去字符串开头结尾的空格，提供_copy后缀和_if后缀
 
@@ -122,7 +122,7 @@ cout << fmt % trim_copy_if(str2,is_punct() || is_digit() || is_space());
 |Happy new Year|
 ```
 
-#### 查找
+## 查找
 
 提供的查找算法如下：
 
@@ -171,7 +171,7 @@ assert(rge.empty() && !rge);
 |king.|.pos = 28
 ```
 
-#### 替换与删除
+## 替换与删除
 
 替换、删除操作与查找算法非常接近，是在查找到结果后再对字符串进行处理，具体如下：
 
@@ -217,7 +217,7 @@ Samus kilL the ridley.
 Samus kill the
 ```
 
-#### 分割
+## 分割
 
 string_algo提供了两个字符串分割算法：`find_all`（虽然它的名称含有find，但因为其功能而被归类为分割算法）和split，可以使用某种策略把字符串分割成若干部分，并将分割后的字符串拷贝存入指定的容器。
 
@@ -268,7 +268,7 @@ cout << endl;
 [Samus][ Link][Zelda][Mario][Luigi][zelda]
 ```
 
-#### 合并
+## 合并
 
 合并算法join是分割算法的逆运算，它把存储在容器中的字符串连接成一个新的字符串，并且可以指定连接的分隔符。
 

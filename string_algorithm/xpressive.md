@@ -1,10 +1,10 @@
-## xpressive
+# xpressive
 
-### 功能
+## 功能
 
 配合正则表达式使用，一定程度上弥补了C++对字符串处理的短板
 
-### 命名空间
+## 命名空间
 
 ```c++
 #include <boost/xpressive/xpressive.hpp>
@@ -13,27 +13,27 @@ using namespace xpressive;
 
 ---
 
-### 基本数据结构
+## 基本数据结构
 
-#### basic_regex
+### basic_regex
 
 `basic_regex`是一个模板类，常用的是两种模板定义
 `typedef:sregex`，用于操作标准字符串string
 `typedef:cregex`,用于操作字符数组（C风格字符串）
 `basic_regex`时xpressive库的核心，封装了对正则表达式的解析和编译，使用静态成员函数`compile()`创建一个`basic_regex`对象。
 
-#### match_results
+### match_results
 
 match_results保存了正则表达式的匹配结果。
 match_results为正则表达式的匹配结果提供一个类似容器的“视图”，可以用size（）和empty（）判断匹配结果中子表达式的数量，operator[]返回第i个子表达式。如果i==0，则返回整个表达式的匹配对象。同样，为了支持不同的字符串类型，match_results有两个方便的typedef，分别是smatch和cmatch，用于支持std：：string和字符数组，它们的命名风格与sregex、cregex是相同的，它们使用相同的前缀。
 
-#### sub_match
+### sub_match
 
 `sub_match`是一个类似迭代器对的对象，继承自`std::pair`，可以把它当作一个字符串的区间表示。
 
 ---
 
-### 正则匹配
+## 正则匹配
 
 自由函数`regex_match()`用来检查一个字符串是否完全匹配一个正则表达式，返回bool结果，其常用的函数声明如下：
 
@@ -45,7 +45,7 @@ bool regex_match(string, match_results% what, basic_regex const & re);
 `regex_match()`最简单的用法接收两个参数：它的第一个参数是要被匹配检查的字符串，第二个参数是正则表达式对象（`sregex`或`cregex`）。
 `regex_match()`的第二种形式多了一个`match_results`输出参数，可以返回查找到的字符串。
 
-#### 简单正则匹配
+## 简单正则匹配
 
 ```c++
 using namespace boost::xpressive;
@@ -59,7 +59,7 @@ assert(!regex_match("ac", reg)); // mismatch
 assert(!regex_match("abd", reg)); // mismatch
 ```
 
-#### 复杂正则匹配
+## 复杂正则匹配
 
 下面使用正则表达式来匹配身份证号码。
 
@@ -90,7 +90,7 @@ assert(!regex_match("999555201012419991", reg));
 
 上述代码中`cregex`的创建略有不同，除正则表达式的字符串较长外，它还使用了一个`icase`标志，用于指示匹配时忽略大小写，此外整个程序与第一个没有什么不同。
 
-#### 使用正则匹配结果
+## 使用正则匹配结果
 
 把上述程序稍微修改一下，增加子表达式，使用`match_results`来提取匹配结果中的年、月、日信息。
 
@@ -129,7 +129,7 @@ date:18800706
 
 ---
 
-### 正则查找
+## 正则查找
 
 使用`regex_search()`函数进行正则查找，和regex_match()区别如下：
 
@@ -172,7 +172,7 @@ POWER-suit POWER suit
 
 ---
 
-### 正则替换
+## 正则替换
 
 xpressive的替换功能使用的函数是`regex_replace()`，它先以正则表达式查找匹配的字符串，再用指定的格式将其替换，基本形式如下：
 
@@ -211,7 +211,7 @@ readme.tt
 
 ---
 
-### 正则迭代
+## 正则迭代
 
 xpressive库提供一个强大的迭代器模板`regex_iterator`，类似于`string_algo`的查找迭代器，可以用来遍历正则表达式的匹配结果。
 
@@ -243,7 +243,7 @@ str = Power-bomb, power-suit, pOWER-beam all times
 
 ---
 
-### 正则分词
+## 正则分词
 
 > 和`basic_regex`一样需要分
 > `sregex_token_iterator`/`cregex_token_iterator`
@@ -293,9 +293,9 @@ cout << endl;
 
 ---
 
-### 高级议题
+## 高级议题
 
-#### 工厂类
+### 工厂类
 
 除了可以使用`sregex::compile()`创建正则表达式对象，xpressive还提供了regex_compiler类作为工厂类。
 
@@ -318,7 +318,7 @@ assert(!regex_match("abc", rc["reg1"]));
 assert(regex_match("123", rc["reg2"]));
 ```
 
-#### 异常
+### 异常
 
 当`expressive`编译不正确的正则表达式或执行其他操作时会抛出regex_error异常。
 
@@ -326,7 +326,7 @@ assert(regex_match("123", rc["reg2"]));
 
 `regex_error`异常派生自`boost::expection`，可以任意追加错误信息。
 
-#### 格式化器
+### 格式化器
 
 在使用`regex_replace()`进行替换时，除了使用简单字符串和格式字符串，我们还可以使用格式化器。格式化器是一个具有`operator()`的可调用对象，函数指针、函数对象或lambda表达式都可以，但它必须能够处理查找到的`match_results`对象。下面的代码定义了一个函数对象`formater`，它将查找到的cmatch对象全部改为大写，使用了string_algo库的to_upper_copy算法：
 

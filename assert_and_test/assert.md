@@ -1,16 +1,16 @@
-## assert
+# assert
 
-### 功能
+## 功能
 
 类似于标准库中的assert，但功能有所增强
 
-### 头文件和命名空间
+## 头文件和命名空间
 
 ```c++
 #include <boost/assert.hpp>
 ```
 
-### 基本用法
+## 基本用法
 
 定义了两个断言宏
 
@@ -21,7 +21,7 @@ define BOOST_ASSERT(expr)    assert(expr)
 define BOOST_ASSERT_MSG(expr,msg)    assert((expr)&&(msg))
 ```
 
-### 错误处理
+## 错误处理
 
 在头文件前定义宏`BOOST_ENABLE_ASSERT_HANDLER`，那么在后面的`BOOST_ASSERT`将不在等同于`assert`，而是调用一个断言失败的函数
 

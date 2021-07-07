@@ -1,16 +1,16 @@
-## lightweight_test
+# lightweight_test
 
-### 测试断言
+## 测试断言
 
 lightweight_test只提供一个轻量级的单元测试框架，提供基本的单元测试，不支持测试用例、测试套件的概念。
 
-### 头文件和命名空间
+## 头文件和命名空间
 
 ```c++
 #include <boost/core/lightweight_test.hpp>
 ```
 
-### 测试断言
+## 测试断言
 
 lightweight_test定义了数个测试断言，以下列出较常用的几个。
 
@@ -25,7 +25,7 @@ lightweight_test定义了数个测试断言，以下列出较常用的几个。
 
 如果以上断言失败，就会增加内部的错误计数，lightweight_test提供函数`boost::report_errors()`来输出测试结果，在测试结束时，我们必须调用`report_errors()`，否则会发生BOOST_ASSERT断言错误。
 
-### 用法示例
+## 用法示例
 
 ```c++
 auto p = std::make_shared<int>(10);

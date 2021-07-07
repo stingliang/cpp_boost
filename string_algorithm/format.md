@@ -1,18 +1,22 @@
-## format
+<!--
+ * @Name: liangrui
+ * @Date: 2021-06-02 18:18:06
+ * @LastEditTime: 2021-06-04 13:21:54
+-->
+# format
 
-### 作用
+## 作用
 
 格式化输出对象，可以不改变流输出状态实现类似于printf()的输出
 
-### 头文件
+## 头文件
 
 ```c++
 #include <boost/format.hpp>
 using namespace boost;
 ```
 
-### 简单的例子
-
+## 简单的例子
 ```c++
 //第一种用法
 cout << format("%s:%d+%d=%d\n") %"sum" %1 %2 %(1+2);
@@ -35,8 +39,8 @@ sum:1+2=3
 1. 第一种用法使用了和printf类似的语法结构，不必赘述
 2. 第二种用法，先实例化format对象确定输出格式，使用%N%指示参数位置
 
-### format对象操作
-
+## format对象操作
+一般对象操作
 ```c++
 //返回格式化后的字符串
 formatobj.str();
@@ -48,7 +52,7 @@ formatobj.parse();
 formatobj.clear();
 ```
 
-### 格式化规则
+## 格式化规则
 
 - %05d：输出宽度为5的整数，不足位用0填充
 - %-8.3f：输出左对齐，宽度总为8，小数位为3的浮点数

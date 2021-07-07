@@ -1,17 +1,17 @@
-## string_ref
+# string_ref
 
-### 功能
+## 功能
 
 一种轻量级的string，持有string类型的引用
 
-### 头文件
+## 头文件
 
 ```c++
 #include <boost/utility/string_ref.hpp>
 using namespace boost;
 ```
 
-### 类摘要
+## 类摘要
 
 ```c++
 template<typename charT,typename traits>
@@ -27,7 +27,7 @@ class basic_string_ref
 
 不拷贝字符串，所以不分配内存，使用两个成员变量表示字符串
 
-### 用法
+## 用法
 
 【注意事项】只能像std::string&一样去获取其内容，<u>但不能修改其本身</u>
 

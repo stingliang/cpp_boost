@@ -1,16 +1,16 @@
-## array
+# array
 
-### 功能
+## 功能
 
 array包装了C++的内建数组，为其提供校准容器接口
 
-### 头文件和命名空间
+## 头文件和命名空间
 
 ```c++
 #include <boost/array.hpp> using namespace boost;
 ```
 
-### 用法
+## 用法
 
 array的模板参数指明了array的元素类型和大小，`array<int, 5>`，相当于声明了一个普通数组`int a[5]`。
 
@@ -50,9 +50,9 @@ ar[8] 0
 ar[9] 10
 ```
 
-## dynamic_bitset
+# dynamic_bitset
 
-### 功能
+## 功能
 
 虽然C++标准中可以使用`vector<bool>`和`bitset`来存储二进制数据，但是他们都有各自的限制，不满足标准容器的定义。
 
@@ -60,22 +60,22 @@ ar[9] 10
 
 `boost::dynamic_bitset`能够存储二进制数据，而且可以动态增长、进行一系列的位运算。
 
-### 头文件和命名空间
+## 头文件和命名空间
 
 ```c++
 #include <boost/dynamic_bitset.hpp> using namespace boost;
 ```
 
-### 用法
+## 用法
 
-#### 创建和赋值
+### 创建和赋值
 
 - 不带参数的构造函数创建一个大小为0的dynamic_bitset对象（可以在之后增长）
 - 传入参数指定dynamic_bitset的大小并赋初值，像标准的容器一样
 - 从另一个dynamic_bitset拷贝构造
 - 从01字符串创建（很遗憾，`dynamic_bitset`与`std::bitset`有相同的缺陷，要求字符串必须是`std::string`，而不能是C字符串）
 
-#### 示例
+### 示例
 
 ```c++
 #include <boost/dynamic_bitset.hpp>
