@@ -11,6 +11,7 @@ set(CMAKE_CXX_STANDARD 17)
 file(GLOB SOURCES
         "memory/memory.cpp"
         "string_algorithm/string_algorithm.cpp"
+        "utility/utility.cpp"
         )
 
 # executable file
