@@ -2,7 +2,7 @@ Boost库
 ===========
 
 .. important::
-  本章节内容大部分都来自作者罗剑锋的出版物《Boost程序库完全开发指南：深入C++“准”标准库（第五版）》.电子工业出版社.Kindle版本的拷贝，并在其基础上进行了删减
+   本章节内容大部分都来自作者罗剑锋的出版物《Boost程序库完全开发指南：深入C++“准”标准库（第五版）》.电子工业出版社.Kindle版本的拷贝，并在其基础上进行了删减
 
 为什么要学Boost
 ---------------
@@ -31,3 +31,4 @@ sample源码
     string_algorithm/index
     assert_and_test/index
     data_struct/index
+    functions_and_callbacks/index
