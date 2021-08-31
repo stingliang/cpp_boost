@@ -20,21 +20,6 @@
 #include <iostream>
 
 ///
-/// \tparam T
-/// \param std::vector
-/// \return std::stringstream
-/// \brief print stl vector
-template<typename T>
-std::stringstream printStl(std::vector<T>& v)
-{
-    std::stringstream ss;
-    for(auto const& elem : v) {
-        ss << "[" << elem << "]";
-    }
-    return ss;
-}
-
-///
 /// \tparam T1
 /// \tparam T2
 /// \param std::map
@@ -52,26 +37,11 @@ std::stringstream printStl(std::map<T1,T2>& m)
 
 ///
 /// \tparam T
-/// \param std::list
-/// \return std::stringstream
-/// \brief print stl list
-template<typename T>
-std::stringstream printStl(std::list<T>& l)
-{
-    std::stringstream ss;
-    for(auto const& elem : l) {
-        ss << "[" << elem << "]";
-    }
-    return ss;
-}
-
-///
-/// \tparam T
-/// \param std::set
+/// \param stl/boost container
 /// \return std::stringstream
 /// \brief print stl set
 template<typename T>
-std::stringstream printStl(std::set<T>& s)
+std::stringstream printStl(T& s)
 {
     std::stringstream ss;
     for(auto const& elem : s) {

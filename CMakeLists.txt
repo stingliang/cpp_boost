@@ -12,6 +12,8 @@ file(GLOB SOURCES
         "memory/memory.cpp"
         "string_algorithm/string_algorithm.cpp"
         "utility/utility.cpp"
+        "data_struct/data_struct.cpp"
+        "assert_and_test/boost_test.cpp"
         )
 
 # executable file
