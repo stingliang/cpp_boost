@@ -11,6 +11,8 @@
 // boost library
 #include <boost/ref.hpp>
 #include <boost/bind.hpp>
+#include <boost/function.hpp>
+#include <boost/signals2.hpp>
 
 struct FunctionFixture {
     FunctionFixture() = default;
@@ -25,7 +27,8 @@ struct FunctionFixture {
     }
 
     struct FuncTest {
-        int memberFunc(int a, int b) {
+        int memberFunc(int a, int b) const {
+            boost::ignore_unused(m_a, m_b); // for IDEA warnning
             return a + b;
         }
 
@@ -36,6 +39,33 @@ struct FunctionFixture {
     struct func {
         int operator()(int a, int b) {
             return a + b;
+        }
+    };
+
+    static int f(int a, int b) {
+        return a + b;
+    }
+
+    static void slots1(int& i) {
+        i++;
+    }
+
+    static void slots2(int& i) {
+        i++;
+    }
+
+    // 定义一个合并器
+    template<typename T>
+    struct Combiner {
+        // 返回类型
+        typedef std::vector<T> result_type;
+        // 重载()
+        template<typename Iterator>
+        result_type operator()(Iterator begin, Iterator end) {
+            if (begin == end) {
+                return result_type();
+            }
+            return result_type(begin, end);
         }
     };
 };
@@ -114,10 +144,150 @@ BOOST_AUTO_TEST_CASE(c_bind) {  /* NOLINT */
 
 BOOST_AUTO_TEST_CASE(c_function) {  /* NOLINT */
 
+    // 简单声明一个function
+    boost::function<int()> func;
+    // 此时func不持有任何对象
+    BOOST_CHECK(!func);
+
+    // 使用decltype直接推到参数类型
+    boost::function<decltype(f)> func2;
+
+    // 验证已存储函数f
+    func2 = f;
+    BOOST_CHECK(func2.contains(&f));
+
+    // 直接转换为bool判断是否包含一个函数对象
+    BOOST_CHECK(func2);
+
+    // 清空func2
+    func2.clear();
+    BOOST_CHECK(func2.empty());
+
+    // 配合bind存储成员函数
+    FuncTest ft;
+    boost::function<int(int, int)> func3;
+    func3 = boost::bind(&FuncTest::memberFunc, &ft, _1, _2);
+    BOOST_CHECK_EQUAL(func3(1, 2), 3);
 }
 
 BOOST_AUTO_TEST_CASE(c_signals2) {  /* NOLINT */
 
+    using namespace boost::signals2;
+
+    {   // 基本用法，指定插槽类型void()，其他模板参数使用默认值
+
+        signal<void(int&)> sig;
+        BOOST_CHECK(sig.empty());
+        /*signal<void()> sig2;
+        BOOST_CHECK(sig2.empty());*/
+
+        // 使用connect()来连接插槽，使用operator()来产生信号
+        int i(0);
+        // 传统用法
+        sig.connect(&slots1);
+        sig.connect(&slots2);
+        BOOST_CHECK_EQUAL(sig.num_slots(), 2);
+        sig(i);
+        // 也可以使用匿名函数包装
+        /*sig2.connect([&](){ slots1(i); });
+        sig2.connect([&](){ slots2(i); });
+        BOOST_CHECK_EQUAL(sig2.num_slots(), 2);
+         sig2();*/
+
+        BOOST_CHECK_EQUAL(i, 2);
+    }
+
+    {    // 使用组号
+
+        signal<void(int&)> sig;
+        int i(0);
+
+        // 最后一个被调用
+        sig.connect(&slots1, at_back);
+        // 第一个被调用
+        sig.connect(&slots2, at_front);
+        sig(i);
+
+        BOOST_CHECK_EQUAL(i, 2);
+    }
+
+    {    // 获取返回值
+
+        signal<int(int&)> sig;
+        int i(0);
+
+        sig.connect([&](int& i)->int{ return i; });
+        sig.connect([&](int& i)->int{ return i + 1; });
+        // 返回值是optional对象
+        boost::optional result = sig(i);
+        // 返回的是最后被调用函数的返回值
+        BOOST_CHECK_EQUAL(*result, 1);
+    }
+
+    {    // 合并器
+
+        /* 定义一个合并器
+        template<typename T>
+        struct Combiner {
+            // 返回类型
+            typedef std::vector<T> result_type;
+            // 重载()
+            template<typename Iterator>
+            result_type operator()(Iterator begin, Iterator end) {
+                if (begin == end) {
+                    return result_type();
+                }
+                return result_type(begin, end);
+            }
+        };*/
+        signal<int(int&), Combiner<int>> sig;
+        int i(0);
+
+        sig.connect([&](int& i)->int{ return i; });
+        sig.connect([&](int& i)->int{ return i + 1; });
+        // 返回值是合并器()的返回类型，这里为std::vector<int>，可以使用auto推导
+        auto result = sig(i);
+        BOOST_CHECK_EQUAL(printStl(result).str(), "[0][1]");
+    }
+
+    {   // 灵活管理插槽
+
+        signal<int(int&), Combiner<int>> sig;
+        int i(0);
+
+        connection c1 = sig.connect([&](int i)->int{ return i; });
+        connection c2 = sig.connect([&](int i)->int{ return i; });
+        connection c3 = sig.connect([&](int i)->int{ return i; });
+        BOOST_CHECK_EQUAL(sig.num_slots(), 3);
+
+        // 断开c1的连接
+        c1.disconnect();
+        BOOST_CHECK_EQUAL(sig.num_slots(), 2);
+        BOOST_CHECK(!c1.connected());
+        BOOST_CHECK(c2.connected());
+
+        // 使用RAII机制临时连接信号
+        {
+            // 进入局部作用域，建立连接
+            scoped_connection sc = sig.connect([&](int i)->int{ return i; });
+            BOOST_CHECK_EQUAL(sig.num_slots(), 3);
+        }
+        // 离开局部作用域，连接自动断开
+        BOOST_CHECK_EQUAL(sig.num_slots(), 2);
+
+        // 阻塞连接
+        {
+            // 阻塞c2
+            shared_connection_block block(c2);
+            // 仍有两个连接
+            BOOST_CHECK_EQUAL(sig.num_slots(), 2);
+            // c2被阻塞
+            BOOST_CHECK(c2.blocked());
+            // 只有c3会被调用
+            auto result = sig(i);
+            BOOST_CHECK_EQUAL(printStl(result).str(), "[0]");
+        }
+    }
 }
 
 BOOST_AUTO_TEST_SUITE_END()  /* NOLINT */
