@@ -58,5 +58,7 @@ git clone https://github.com/stingliang/cpp_boost.git
   - [dynamic_bitset](https://wowsting.club/cpp_boost/data_struct/array_and_dynamci_bitset.html#dynamic-bitset)
   - [unordered](https://wowsting.club/cpp_boost/data_struct/unordered.html)
 - 函数与回调
-  - [bind](https://wowsting.club/cpp_boost/functions_and_callbacks/bind.html)
   - [ref](https://wowsting.club/cpp_boost/functions_and_callbacks/ref.html)
+  - [bind](https://wowsting.club/cpp_boost/functions_and_callbacks/bind.html)
+  - [functions](https://wowsting.club/cpp_boost/functions_and_callbacks/functions.html)
+  - [signals2](https://wowsting.club/cpp_boost/functions_and_callbacks/signals2.html)
