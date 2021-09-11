@@ -40,7 +40,7 @@ template<typename Signature,
 
 - `connect()`
 
-把插槽连接到信号上，相当于为信号（事件）增加了一个处理的handler。插槽可以是任意的可调用对象，包括函数指针、函数对象，以及它们的bind/lambda表达式和function对象，signal内部使用function作为容器来保存这些可调用对象。连接时可以指定组号也可以不指定组号，当信号发生时将依据组号的排序准则依次调用插槽函数。如果连接成功，`connect()`将返回一个connection对象，表示信号与插槽之间的连接关系，它是一个轻量级对象，可以处理两者间的连接，如断开、重连接或测试连接状态
+  把插槽连接到信号上，相当于为信号（事件）增加了一个处理的handler。插槽可以是任意的可调用对象，包括函数指针、函数对象，以及它们的bind/lambda表达式和function对象，signal内部使用function作为容器来保存这些可调用对象。连接时可以指定组号也可以不指定组号，当信号发生时将依据组号的排序准则依次调用插槽函数。如果连接成功，`connect()`将返回一个connection对象，表示信号与插槽之间的连接关系，它是一个轻量级对象，可以处理两者间的连接，如断开、重连接或测试连接状态
 
 - `disconnect()`
 
@@ -85,10 +85,9 @@ void slots2(int& i) { i++; }
 // 基本用法，指定插槽类型void()，其他模板参数使用默认值
 signal<void(int&)> sig;
 BOOST_CHECK(sig.empty());
-
-// 使用connect()来连接插槽，使用operator()来产生信号
 int i(0);
 
+// 使用connect()来连接插槽，使用operator()来产生信号
 sig.connect(&slots1);
 sig.connect(&slots2);
 BOOST_CHECK_EQUAL(sig.num_slots(), 2);

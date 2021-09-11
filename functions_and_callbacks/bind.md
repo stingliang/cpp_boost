@@ -35,12 +35,14 @@ bind的真正威力在于它的占位符，它们分别被定义为\_1、\_2、\
 
 ### 示例函数
 
+假设有如下两个函数
+
 ```c++
 int twoParamsFunc(int a, int b) { return a + b; }	// 二元函数
 int tripParamsFunc(int a, int b, int c) { return a + b * c; } // 三元函数
 ```
 
-#### 示例1：绑定普通函数的用法
+#### 绑定普通函数的用法
 
 `bind(twoParamsFunc,1,2)`将返回一个无参调用的函数对象，等价于`twoParamsFunc(1,2)`。`bind(tripParamsFunc,1,2,3)`同样返回一个无参调用的函数对象，等价于`tripParamsFunc(1,2,3)`。这两个绑定表达式没有使用占位符，而是给出了全部的具体参数，代码如下：
 
@@ -49,7 +51,7 @@ BOOST_CHECK_EQUAL(boost::bind(twoParamsFunc, 1, 2)(), twoParamsFunc(1, 2));
 BOOST_CHECK_EQUAL(boost::bind(tripParamsFunc, 1, 2, 3)(), tripParamsFunc(1, 2, 3));
 ```
 
-#### 示例2：占位符的用法
+#### 占位符的用法
 
 使用占位符bind可以有更多的变化，这才是它真正应该做的工作，下面列出了一些占位符的用法：
 
@@ -63,7 +65,7 @@ BOOST_CHECK_EQUAL(boost::bind(tripParamsFunc, _1, 8, _2)(x, y), tripParamsFunc(x
 BOOST_CHECK_EQUAL(boost::bind(tripParamsFunc, _3, _2, _2)(x, y, z), tripParamsFunc(z, y, y));   // x参数被忽略
 ```
 
-#### 示例3：操作成员函数
+#### 操作成员函数
 
 类的成员函数不同于普通函数，因为成员函数指针不能直接调用`operator()`，它必须先被绑定到一个对象或指针上，然后才能得到this指针进而调用成员函数。因此bind需要“牺牲”一个占位符的位置，要求用户提供一个类的实例、引用或指针，通过对象作为第一个参数来调用成员函数：
 
@@ -88,7 +90,7 @@ BOOST_CHECK_EQUAL(boost::bind(&FuncTest::memberFunc, rft, _2, _1)(10, 20), rft.m
 BOOST_CHECK_EQUAL(boost::bind(&FuncTest::memberFunc, p, _1, _2)(10, 20), p->memberFunc(10, 20));
 ```
 
-#### 示例4：操作成员变量
+#### 操作成员变量
 
 `bind`的另一个对类的操作是它可以绑定`public`成员变量，它就像是一个选择器，其用法与绑定成员函数类似，只需要像使用一个成员函数一样去使用成员变量名。
 
@@ -97,7 +99,7 @@ BOOST_CHECK_EQUAL(boost::bind(&FuncTest::m_a, _1)(ft), ft.m_a); // 使用占位�
 BOOST_CHECK_EQUAL(boost::bind(&FuncTest::m_a, rft)(), rft.m_a); // 直接绑定
 ```
 
-#### 示例5：操作函数对象
+#### 操作函数对象
 
 `bind`不仅能够绑定函数和函数指针，也能够绑定任意的函数对象，包括标准库中的所有预定义的函数对象。
 
