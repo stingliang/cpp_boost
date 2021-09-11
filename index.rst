@@ -1,10 +1,13 @@
 Boost库
 ===========
 
+.. important::
+   本章节内容大部分都来自作者罗剑锋的出版物《Boost程序库完全开发指南：深入C++“准”标准库（第五版）》.电子工业出版社.Kindle版本的拷贝，并在其基础上进行了删减
+
 为什么要学Boost
 ---------------
 
-很遗憾没有在大学好好学习，进入工作岗位后感到很吃力，现在通过写博客来沉淀一些技术知识。
+Boost作为"准"C++标准库，提供了大量的算法和数据结构供开发人员使用，学习Boost库能够极大地提高开发效率。
 
 sample源码
 ----------
@@ -28,3 +31,4 @@ sample源码
     string_algorithm/index
     assert_and_test/index
     data_struct/index
+    functions_and_callbacks/index

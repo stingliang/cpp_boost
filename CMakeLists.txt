@@ -11,6 +11,10 @@ set(CMAKE_CXX_STANDARD 17)
 file(GLOB SOURCES
         "memory/memory.cpp"
         "string_algorithm/string_algorithm.cpp"
+        "utility/utility.cpp"
+        "data_struct/data_struct.cpp"
+        "assert_and_test/boost_test.cpp"
+        "functions_and_callbacks/functions_and_callbacks.cpp"
         )
 
 # executable file

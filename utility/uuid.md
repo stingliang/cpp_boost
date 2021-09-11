@@ -80,10 +80,10 @@ cout << u << endl;
 ```c++
 //第一个()构造生成器对象，第二个()调用对象的函数
 uuid u = nil_generator()();
-assert(u.is_nil);
+assert(u.is_nil());
 //nil_uuid()是一个内联函数，相当于直接调用Nil生成器
 u = nil_uuid();
-assert(u.is_nil);
+assert(u.is_nil());
 ```
 
 2）字符串生成器
