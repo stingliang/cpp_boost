@@ -15,6 +15,7 @@ file(GLOB SOURCES
         "data_struct/data_struct.cpp"
         "assert_and_test/boost_test.cpp"
         "functions_and_callbacks/functions_and_callbacks.cpp"
+        "concurrent_programming/*.cpp"
         )
 
 # executable file
