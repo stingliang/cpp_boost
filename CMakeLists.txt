@@ -24,6 +24,7 @@ add_executable(cpp_boost common.h main.cpp ${SOURCES})
 # vcpkg
 find_package(Boost REQUIRED COMPONENTS
         unit_test_framework
+        chrono
         )
 
 target_include_directories(cpp_boost PUBLIC
