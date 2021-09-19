@@ -7,7 +7,8 @@ array包装了C++的内建数组，为其提供校准容器接口
 ## 头文件和命名空间
 
 ```c++
-#include <boost/array.hpp> using namespace boost;
+#include <boost/array.hpp> 
+using namespace boost;
 ```
 
 ## 用法
