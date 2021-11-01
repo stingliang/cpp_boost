@@ -12,8 +12,6 @@
 #include <boost/thread.hpp>
 #include <boost/thread/with_lock_guard.hpp>
 
-boost::chrono::seconds operator"" _s(unsigned long long n) { return boost::chrono::seconds(n); }
-
 BOOST_AUTO_TEST_SUITE(s_concurrent_programming)  /* NOLINT */
 
 BOOST_AUTO_TEST_CASE(c_mutex) {  /* NOLINT */

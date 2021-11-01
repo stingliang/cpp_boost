@@ -52,4 +52,6 @@ std::stringstream printStl(T& s)
     return ss;
 }
 
+boost::chrono::seconds operator"" _s(unsigned long long n) { return boost::chrono::seconds(n); }
+
 #endif //CPP_BOOST_COMMON_H

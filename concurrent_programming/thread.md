@@ -119,8 +119,12 @@ BOOST_CHECK_EQUAL(t1.get_id(), t2.get_id());
 ```
 
 另有4个自由函数get_id()、yield()、sleep_for()、sleep_until()，它们无需使用thread对象就可以操作当前线程，但它们位于子名字空间boost::this_thread,而不是thread的静态成员函数
-
-```C++
+> TIPS
+> 你可以定义自己的字面值时间常量，例如：
+> ```c++
+> boost::chrono::seconds operator"" _s(unsigned long long n) { return boost::chrono::seconds(n); }
+> ```
+```c++
 // 5s为C++14定义的字面值常量，5_s为自定义的字面值常量
 using namespace std::chrono_literals;
 std::this_thread::sleep_for(5s);    // C++ 标准库用法
