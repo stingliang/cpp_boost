@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE(c_multi_array) {  /* NOLINT */
 BOOST_AUTO_TEST_CASE(c_property_tree) {  /* NOLINT */
 
     boost::property_tree::ptree pt;
-    read_json("info.json", pt);
+    read_json("data_struct/info.json", pt);
     BOOST_CHECK_EQUAL(pt.get<std::string>("name.firstname"), "sting");
     pt.add("address.conutry", "China");
     pt.add("address.province", "SiChuan");

@@ -1,5 +1,5 @@
 # cmake minimum version requirements
-cmake_minimum_required(VERSION 3.19)
+cmake_minimum_required(VERSION 3.10)
 
 # project name
 project(cpp_boost)
@@ -25,6 +25,7 @@ add_executable(cpp_boost common.h main.cpp ${SOURCES})
 find_package(Boost REQUIRED COMPONENTS
         unit_test_framework
         chrono
+        thread
         )
 
 target_include_directories(cpp_boost PUBLIC

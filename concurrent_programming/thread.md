@@ -67,3 +67,63 @@ boost::with_lock_guard(mu, [](){
 
 ## 线程对象
 
+thread类实现了操作系统里的线程表示，负责启动和管理线程对象，它在概念和操作上都和POSIX线程相似，其类摘要如下
+
+```c++
+class thread {    // 线程对象，不可拷贝
+public:
+    thread();
+    explicit thread(F f);    // 传递可调用对象
+    thread(F f, A1 a1, A2 a2,...)    // 传递可调用对象及参数
+        
+    thread(thread&&) noexcept;	// 转移构造函数
+    thread& operator=(thread&&) noexcept;	// 转义赋值函数
+    
+    bool joinable() const;	// 是否可join
+    void join();	// 等待线程
+    
+    void detach;	// 分离线程
+    
+    bool try_join_for(const duration& rel_time);	// 超时等待
+    bool try_join_until(const time_point& t);	// 超时等待
+    
+    void interrupt();	// 中断线程
+    bool interruption_requested() const;	// 是否被中断
+    
+    class id;	// 内部类，用于表示线程ID
+    id get_id() const;	// 获得线程id对象
+    native_handle_type native_handle();	// 获得系统相关的操作handle
+    
+    static unsigned hardware_concurrency();	// 静态成员，获取可并发的核心数
+    static unsigned physical_concurrency();	// 静态成员，获取真实CPU的核心数
+};
+
+namespace this_thread {
+    thread::id get_id();	// 获得当前线程的id对象
+    void yield();	// 运行重新调度当前线程
+    void sleep_until(const time_point& t);	// 睡眠等待
+    void sleep_for(const duration& d);	// 睡眠等待
+}
+```
+
+> 使用boost库的好处之一就是可以很方便的开发跨平台代码，比如在Linux和Windows下的线程概念是不一样的，包含的头文件也不一样，可以考虑使用boost的thread对象来代替传统标准库中的thread，这样编写的包含现场的代码可以很好的在不同平台上编译
+
+thread对象是不可拷贝、不可比较的，但它支持转移（move）语义，有转移构造函数和转移赋值函数，所以它可以从工厂函数产生。
+
+成员函数get_id()可以返回thread::id对象，它提供了完整的比较操作符和流输出操作符，唯一地表示了thread对象
+
+```c++
+boost::thread t1, t2;
+BOOST_TEST_MESSAGE(t1.get_id());
+BOOST_CHECK_EQUAL(t1.get_id(), t2.get_id());
+```
+
+另有4个自由函数get_id()、yield()、sleep_for()、sleep_until()，它们无需使用thread对象就可以操作当前线程，但它们位于子名字空间boost::this_thread,而不是thread的静态成员函数
+
+```C++
+// 5s为C++14定义的字面值常量，5_s为自定义的字面值常量
+using namespace std::chrono_literals;
+std::this_thread::sleep_for(5s);    // C++ 标准库用法
+boost::this_thread::sleep_for(5_s);     // Boost库用法
+```
+

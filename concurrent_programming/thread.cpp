@@ -12,6 +12,8 @@
 #include <boost/thread.hpp>
 #include <boost/thread/with_lock_guard.hpp>
 
+boost::chrono::seconds operator"" _s(unsigned long long n) { return boost::chrono::seconds(n); }
+
 BOOST_AUTO_TEST_SUITE(s_concurrent_programming)  /* NOLINT */
 
 BOOST_AUTO_TEST_CASE(c_mutex) {  /* NOLINT */
@@ -44,6 +46,19 @@ BOOST_AUTO_TEST_CASE(c_lock_guard) {  /* NOLINT */
             //  critical resource
         });
     }
+}
+
+BOOST_AUTO_TEST_CASE(c_thread_object) {  /* NOLINT */
+    using namespace std::chrono_literals;
+
+    boost::thread t1, t2;
+    BOOST_TEST_MESSAGE(t1.get_id());
+    BOOST_CHECK_EQUAL(t1.get_id(), t2.get_id());
+
+    BOOST_TEST_MESSAGE("Waiting for 5 seconds ...");
+    std::this_thread::sleep_for(5s);    // C++ 标准库用法
+    BOOST_TEST_MESSAGE("Waiting for 5 seconds ...");
+    boost::this_thread::sleep_for(5_s);     // Boost库用法
 }
 
 BOOST_AUTO_TEST_SUITE_END()  /* NOLINT */
